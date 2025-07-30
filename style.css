@@ -1,0 +1,102 @@
+body {
+    background-color: #008080;
+    font-family: 'Pixelated MS Sans Serif', Arial;
+    overflow: hidden;
+}
+
+.desktop {
+    padding: 20px;
+}
+
+.folder {
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    width: 120px;
+}
+
+.folder img {
+    width: 80px;
+    height: 80px;
+}
+
+.folder span {
+    display: block;
+    margin-top: 5px;
+}
+
+.window {
+    display: none;
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    width: 500px;
+    height: 300px;
+    border: 2px solid #000;
+    background-color: #c0c0c0;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
+}
+
+.title-bar {
+    background-color: #000080;
+    color: white;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    cursor: move;
+}
+
+.close-button {
+    cursor: pointer;
+    background-color: #c0c0c0;
+    color: black;
+    padding: 0 5px;
+    border: 1px solid black;
+}
+
+.content {
+    padding: 10px;
+    display: flex;
+    gap: 20px;
+}
+
+.file {
+    cursor: pointer;
+    text-align: center;
+}
+
+.file img {
+    width: 40px;
+    height: 40px;
+}
+
+.terminal-content {
+    background-color: black;
+    color: lime;
+    height: calc(100% - 20px);
+    overflow-y: auto;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.dialog {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f0f0f0;
+    padding: 20px;
+    border: 2px solid #000;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
+    z-index: 1000;
+    width: 400px;
+}
+
+.dialog-content {
+    text-align: center;
+}
+
+#next-dialog {
+    margin-top: 10px;
+    padding: 5px 10px;
+} 
