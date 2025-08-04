@@ -1,6 +1,13 @@
 body {
-    background-color: #008080;
-    font-family: 'Pixelated MS Sans Serif', Arial;
+    background: #008080 repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0.2) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
     overflow: hidden;
 }
 
@@ -13,6 +20,7 @@ body {
     text-align: center;
     color: white;
     width: 120px;
+    font-size: 12px;
 }
 
 .folder img {
@@ -23,6 +31,7 @@ body {
 .folder span {
     display: block;
     margin-top: 5px;
+    background-color: #008080;
 }
 
 .window {
@@ -63,11 +72,22 @@ body {
 .file {
     cursor: pointer;
     text-align: center;
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .file img {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+.file span {
+    margin-top: 5px;
+    word-wrap: break-word;
+    font-size: 12px;
 }
 
 .terminal-content {
@@ -76,6 +96,10 @@ body {
     height: calc(100% - 20px);
     overflow-y: auto;
     font-family: 'Courier New', Courier, monospace;
+    padding: 10px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    line-height: 1.4;
 }
 
 .dialog {
@@ -90,10 +114,59 @@ body {
     box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
     z-index: 1000;
     width: 400px;
+    position: relative; /* For glitch effect */
+}
+
+.glitch-overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(0deg, #600, #600 1px, black 1px, black 2px);
+    color: white;
+    text-align: center;
+    font-size: 24px;
+    z-index: 1001;
+    overflow: hidden;
+    animation: glitch-anim-medium 0.3s infinite; /* Faster animation frequency */
+    text-shadow: 1px 0 #ff0000, -1px 0 #ff0000; /* Simplified shadow */
+    font-family: 'Courier New', monospace;
+    align-items: center;
+    justify-content: center;
+}
+
+.glitch-overlay.active {
+    display: flex;
+}
+
+/* A medium-intensity, safer version of the glitch animation */
+@keyframes glitch-anim-medium {
+    0%   { transform: translate(0, 0); opacity: 1; }
+    20%  { transform: translate(-3px, 3px); opacity: 0.8; }
+    40%  { transform: translate(3px, -3px); opacity: 1; }
+    60%  { transform: translate(-2px, 2px); opacity: 0.9; }
+    80%  { transform: translate(2px, -2px); opacity: 1; }
+    100% { transform: translate(0, 0); opacity: 1; }
+}
+
+@keyframes background-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .dialog-content {
     text-align: center;
+}
+
+#dialog-text {
+    white-space: pre-wrap;
+}
+
+.dialog.glitch-active #dialog-text {
+    color: white;
 }
 
 #next-dialog {
