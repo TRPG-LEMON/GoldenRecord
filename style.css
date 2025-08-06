@@ -13,6 +13,9 @@ body {
 
 .desktop {
     padding: 20px;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
 }
 
 .folder {
@@ -172,4 +175,78 @@ body {
 #next-dialog {
     margin-top: 10px;
     padding: 5px 10px;
+}
+
+.list-view-content {
+    padding: 0;
+    height: calc(100% - 30px);
+    overflow-y: auto;
+    background-color: #f0f0f0;
+}
+
+.list-view {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list-view-header {
+    display: flex;
+    font-weight: bold;
+    padding: 8px 10px;
+    border-bottom: 1px solid #888;
+    background-color: #e0e0e0;
+    user-select: none;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.list-item:hover {
+    background-color: #d0d0d0;
+}
+
+.list-item-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.col-name {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    min-width: 200px;
+}
+
+.col-name span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.col-size, .col-type, .col-date {
+    padding-left: 10px;
+    white-space: nowrap;
+    color: #333;
+    flex-shrink: 0;
+}
+
+.col-size {
+    width: 100px;
+    text-align: right;
+}
+
+.col-type {
+    width: 120px;
+}
+
+.col-date {
+    width: 140px;
 } 

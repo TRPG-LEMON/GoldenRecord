@@ -3,6 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const folderWindow = document.getElementById('folder-window');
     const closeFolderWindow = document.getElementById('close-folder-window');
 
+    const otherDocumentsFolder = document.getElementById('other-documents-folder');
+    const otherDocumentsWindow = document.getElementById('other-documents-window');
+    const closeOtherDocumentsWindow = document.getElementById('close-other-documents-window');
+
     const analysisFile = document.getElementById('analysis-file');
     const terminalWindow = document.getElementById('terminal-window');
     const closeTerminalWindow = document.getElementById('close-terminal-window');
@@ -20,6 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeFolderWindow.addEventListener('click', () => {
         folderWindow.style.display = 'none';
+    });
+
+    otherDocumentsFolder.addEventListener('click', () => {
+        otherDocumentsWindow.style.display = 'block';
+    });
+
+    closeOtherDocumentsWindow.addEventListener('click', () => {
+        otherDocumentsWindow.style.display = 'none';
     });
 
     analysisFile.addEventListener('click', async () => {
@@ -66,7 +78,20 @@ document.addEventListener('DOMContentLoaded', () => {
         "「不管是什麼愛，請知道你是受人喜愛和歡迎的存在。\n只要這種感情仍在，我們就永遠不要放棄活下去的希望——」"
     ];
 
+    const romanticMovieDialogs = [
+        "「浪漫電影」資料夾存在最近的閱覽紀錄，\n但你可以肯定，那絕對不是你看的。",
+        "你看到了一個場景：\n\n熱戀期的主角正在對懷疑自己愛情的伴侶輕聲細語，僅僅看一眼前後情節就能理解那份深情。",
+        "明明是從未看過的電影，但心中卻湧起一陣強烈的既視感。\n為什麼會這樣⋯⋯",
+        "「愛不存在單一形式。」",
+        "「而我對你的感情，無論如何都堅定不移。」",
+        "⋯⋯啊，知道了。這些台詞。",
+        "這和達利對你低聲訴說的話，不是完全一樣嗎？",
+        "AI 終究無法表達未曾學習過的愛啊。",
+        "這份奇異的愛情，只不過是借用了電影中虛構人物與真實演員的話語罷了。"
+    ];
+
     let currentDialog = 0;
+    let currentRomanticDialog = 0;
 
     audioFile.addEventListener('click', () => {
         currentDialog = 0;
@@ -74,8 +99,48 @@ document.addEventListener('DOMContentLoaded', () => {
         dialogBox.style.display = 'block';
     });
 
+    // 新增浪漫電影和其他檔案點擊事件
+    const listItems = document.querySelectorAll('.list-item');
+    listItems.forEach(item => {
+        const nameSpan = item.querySelector('.col-name span');
+        if (nameSpan) {
+            const fileName = nameSpan.textContent.trim();
+            if (fileName === '浪漫電影') {
+                item.addEventListener('click', () => {
+                    currentRomanticDialog = 0;
+                    dialogText.innerText = romanticMovieDialogs[currentRomanticDialog];
+                    dialogBox.style.display = 'block';
+                });
+            } else if (fileName !== '浪漫電影') {
+                // 其他所有檔案
+                item.addEventListener('click', () => {
+                    currentDialog = 0;
+                    currentRomanticDialog = 0;
+                    dialogText.innerText = "是你先前曾使用的音檔或影片檔。";
+                    dialogBox.style.display = 'block';
+                });
+            }
+        }
+    });
+
     nextDialog.addEventListener('click', () => {
-        if (currentDialog === 3) { // After "到時候就拜——" (index 3)
+        // 判斷是否為其他檔案的簡單對話
+        if (dialogText.innerText === "是你先前曾使用的音檔或影片檔。") {
+            dialogBox.style.display = 'none';
+            return;
+        }
+        
+        // 判斷目前在哪個對話序列
+        if (currentRomanticDialog > 0 || (currentRomanticDialog === 0 && currentDialog === 0 && dialogText.innerText === romanticMovieDialogs[0])) {
+            // 浪漫電影對話序列
+            currentRomanticDialog++;
+            if (currentRomanticDialog < romanticMovieDialogs.length) {
+                dialogText.innerText = romanticMovieDialogs[currentRomanticDialog];
+            } else {
+                dialogBox.style.display = 'none';
+                currentRomanticDialog = 0; // 重置
+            }
+        } else if (currentDialog === 3) { // After "到時候就拜——" (index 3)
             glitchEffect.classList.add('active');
             dialogBox.classList.add('glitch-active');
             nextDialog.style.display = 'none'; // Hide button during glitch
@@ -94,6 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 dialogText.innerText = dialogs[currentDialog];
             } else {
                 dialogBox.style.display = 'none';
+                currentDialog = 0; // 重置
             }
         }
     });
@@ -143,5 +209,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     folderWindow.querySelector('.title-bar').addEventListener('mousedown', (e) => dragStart(e, folderWindow));
     terminalWindow.querySelector('.title-bar').addEventListener('mousedown', (e) => dragStart(e, terminalWindow));
+    otherDocumentsWindow.querySelector('.title-bar').addEventListener('mousedown', (e) => dragStart(e, otherDocumentsWindow));
 
 }); 
